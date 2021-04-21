@@ -20,5 +20,10 @@ pipeline {
                 bat 'mvn clean test'
             }
         }
+        stage('Backup and Reports') {
+            steps {
+                echo 'Test stage'
+            }
+        }
     }
  }
