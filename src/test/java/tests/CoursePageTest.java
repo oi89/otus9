@@ -16,9 +16,9 @@ public class CoursePageTest extends BaseTest {
     CoursePage coursePage;
 
     @Test
-    @Story("Проверка курса Team Lead")
+    @Story("Проверка курса по разработке Team Lead")
     @Description("Тест проверяет заголовок и кнопку записи на странице курса Team Lead")
-    @DisplayName("Проверка курса Team Lead")
+    @DisplayName("Проверка курса по разработке Team Lead")
     public void checkTeamLeadCoursePageTest() {
         String expectedCourseName = "Team Lead";
         String expectedButtonName = "Оставить заявку";
