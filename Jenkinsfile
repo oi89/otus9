@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Run maven clean test') {
             steps {
-                bat 'java -Dfile.encoding=UTF-8 jenkins.war'
+                bat 'export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8'
                 bat 'mvn clean test'
             }
         }
