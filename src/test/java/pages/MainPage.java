@@ -23,7 +23,7 @@ public class MainPage extends BasePage {
     private String secondLevelMenuLocator = "//div[contains(@class, 'header2-menu__subdropdown')]//a[@title='%s']";
     private WebElement secondLevelMenu;
 
-    private String cookiesAcceptButtonLocator = "div.cookies__margin-block button";
+    private String cookiesAcceptButtonLocator = "button.cookies__button";
     private WebElement cookiesAcceptButton;
 
     public MainPage(WebDriver driver) {
@@ -61,6 +61,10 @@ public class MainPage extends BasePage {
         firstLevelMenu = getWebElementByName(firstLevelMenuLocator, subMenuName);
 
         firstLevelMenu.click();
+
+        Allure.addAttachment("MainPage", new ByteArrayInputStream(
+                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+
         logger.info(String.format("Клик на подпункт '%s'", subMenuName));
 
         return this;
@@ -84,7 +88,13 @@ public class MainPage extends BasePage {
     public MainPage clickSecondLevelMenuByName(String subMenuName) {
         secondLevelMenu = getWebElementByName(secondLevelMenuLocator, subMenuName);
 
-        secondLevelMenu.click();
+        //secondLevelMenu.click();
+        actions
+                .moveByOffset(100, 0)
+                .moveToElement(secondLevelMenu)
+                .click()
+                .build()
+                .perform();
 
         Allure.addAttachment("MainPage", new ByteArrayInputStream(
                 ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
@@ -96,12 +106,13 @@ public class MainPage extends BasePage {
 
     void tryToCloseCookiePanel() {
         try {
-            new WebDriverWait(driver, 10)
+            Thread.sleep(3000);
+            cookiesAcceptButton = new WebDriverWait(driver, 5)
                     .until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cookiesAcceptButtonLocator)));
-            cookiesAcceptButton = driver.findElement(By.cssSelector(cookiesAcceptButtonLocator));
             cookiesAcceptButton.click();
-
             logger.info("Нажата кнопка OK с подтверждением куки");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } catch (Exception ex) {
             logger.info("Окно с согласием на обработку куки не было показано");
         }

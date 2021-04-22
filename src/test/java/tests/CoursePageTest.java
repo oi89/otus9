@@ -16,12 +16,12 @@ public class CoursePageTest extends BaseTest {
     CoursePage coursePage;
 
     @Test
-    @Story("Проверка курса по JavaScript разработке")
-    @Description("Тест проверяет заголовок и кнопку записи на странице курса по JavaScript разработке")
-    @DisplayName("Проверка курса по JavaScript разработке")
-    public void checkJsCoursePageTest() {
-        String expectedCourseName = "JavaScript Developer. Professional";
-        String expectedButtonName = "Успеть на курс";
+    @Story("Проверка курса Team Lead")
+    @Description("Тест проверяет заголовок и кнопку записи на странице курса Team Lead")
+    @DisplayName("Проверка курса Team Lead")
+    public void checkTeamLeadCoursePageTest() {
+        String expectedCourseName = "Team Lead";
+        String expectedButtonName = "Оставить заявку";
 
         mainPage = new MainPage(driver);
         coursePage = new CoursePage(driver);
@@ -30,31 +30,7 @@ public class CoursePageTest extends BaseTest {
                 .open()
                 .clickMainMenuByName("Курсы")
                 .openSecondLevelMenuByName("Программирование")
-                .clickSecondLevelMenuByName("JavaScript Developer. Professional");
-
-        Assertions.assertEquals(expectedCourseName, coursePage.getTitleText(),
-                String.format("Заголовок страницы должен быть равен %s", expectedCourseName));
-
-        Assertions.assertEquals(expectedButtonName, coursePage.getButtonText(),
-                String.format("На странице курса должна быть кнопка %s", expectedButtonName));
-    }
-
-    @Test
-    @Story("Проверка курса по базам данных")
-    @Description("Тест проверяет заголовок и кнопку записи на странице курса по базам данных")
-    @DisplayName("Проверка курса по базам данных")
-    public void checkDatabaseCoursePageTest() {
-        String expectedCourseName = "Базы данных";
-        String expectedButtonName = "Успеть на курс";
-
-        mainPage = new MainPage(driver);
-        coursePage = new CoursePage(driver);
-
-        mainPage
-                .open()
-                .clickMainMenuByName("Курсы")
-                .openSecondLevelMenuByName("Программирование")
-                .clickSecondLevelMenuByName("Базы данных");
+                .clickSecondLevelMenuByName("Team Lead");
 
         Assertions.assertEquals(expectedCourseName, coursePage.getTitleText(),
                 String.format("Заголовок страницы должен быть равен %s", expectedCourseName));

@@ -42,7 +42,7 @@ public class SpecializationListPageTest extends BaseTest {
     @Description("Тест проверяет заголовок блока специализации по Java и базам данных")
     @DisplayName("Проверка блока специализации Java и Базы данных")
     public void javaDbSpecializationBlockTest() {
-        String expectedSpecTitle = "Специализация Java";
+        String expectedSpecTitle = "Специализация Java и Базы данных";
 
         mainPage = new MainPage(driver);
         specializationsListPage = new SpecializationsListPage(driver);
