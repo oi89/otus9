@@ -16,30 +16,6 @@ public class CoursePageTest extends BaseTest {
     CoursePage coursePage;
 
     @Test
-    @Story("Проверка курса по разработке Team Lead")
-    @Description("Тест проверяет заголовок и кнопку записи на странице курса Team Lead")
-    @DisplayName("Проверка курса по разработке Team Lead")
-    public void checkTeamLeadCoursePageTest() {
-        String expectedCourseName = "Team Lead";
-        String expectedButtonName = "Оставить заявку";
-
-        mainPage = new MainPage(driver);
-        coursePage = new CoursePage(driver);
-
-        mainPage
-                .open()
-                .clickMainMenuByName("Курсы")
-                .openSecondLevelMenuByName("Программирование")
-                .clickSecondLevelMenuByName("Team Lead");
-
-        Assertions.assertEquals(expectedCourseName, coursePage.getTitleText(),
-                String.format("Заголовок страницы должен быть равен %s", expectedCourseName));
-
-        Assertions.assertEquals(expectedButtonName, coursePage.getButtonText(),
-                String.format("На странице курса должна быть кнопка %s", expectedButtonName));
-    }
-
-    @Test
     @Story("Проверка курса по тестированию Java QA")
     @Description("Тест проверяет заголовок и кнопку записи на странице курса по тестированию Java QA")
     @DisplayName("Проверка курса по тестированию Java QA")

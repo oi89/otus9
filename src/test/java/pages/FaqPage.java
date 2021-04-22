@@ -5,16 +5,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CompanyLegalInfoPage extends BasePage {
-    @FindBy(css = "div.title-new__text h1")
+public class FaqPage extends BasePage {
+    @FindBy(css = "h1.faq-header__text")
     private WebElement title;
 
-    public CompanyLegalInfoPage(WebDriver driver) {
+    public FaqPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
     public String getTitleText() {
-        return title.getText();
+        return title.getText().replaceAll("\n", " ");
     }
 }

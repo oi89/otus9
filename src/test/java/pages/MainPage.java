@@ -31,6 +31,12 @@ public class MainPage extends BasePage {
     @FindBy(css = "header a[href='/contacts/']")
     private WebElement contactsLink;
 
+    @FindBy(css = "header a[href='/faq/']")
+    private WebElement faqLink;
+
+    @FindBy(css = "header a[href='/journal/']")
+    private WebElement journalLink;
+
     public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -115,6 +121,22 @@ public class MainPage extends BasePage {
         Allure.addAttachment("MainPage", new ByteArrayInputStream(
                 ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
         logger.info("Клик на ссылку Контакты");
+    }
+
+    @Step("Клик на ссылку FAQ")
+    public void clickFaqLink() {
+        faqLink.click();
+        Allure.addAttachment("MainPage", new ByteArrayInputStream(
+                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+        logger.info("Клик на ссылку FAQ");
+    }
+
+    @Step("Клик на ссылку OTUS JOURNAL")
+    public void clickJournalLink() {
+        journalLink.click();
+        Allure.addAttachment("MainPage", new ByteArrayInputStream(
+                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+        logger.info("Клик на ссылку OTUS JOURNAL");
     }
 
     void tryToCloseCookiePanel() {
