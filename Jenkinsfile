@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Backup and Reports') {
             steps {
-                echo 'Test stage'
+                echo 'Test backup stage'
             }
         }
     }
