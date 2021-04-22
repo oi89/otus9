@@ -88,7 +88,6 @@ public class MainPage extends BasePage {
     public MainPage clickSecondLevelMenuByName(String subMenuName) {
         secondLevelMenu = getWebElementByName(secondLevelMenuLocator, subMenuName);
 
-        //secondLevelMenu.click();
         actions
                 .moveByOffset(100, 0)
                 .moveToElement(secondLevelMenu)
