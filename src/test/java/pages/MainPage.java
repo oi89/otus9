@@ -3,6 +3,8 @@ package pages;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,8 +28,12 @@ public class MainPage extends BasePage {
     private String cookiesAcceptButtonLocator = "button.cookies__button";
     private WebElement cookiesAcceptButton;
 
+    @FindBy(css = "header a[href='/contacts/']")
+    private WebElement contactsLink;
+
     public MainPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     @Step("Открытие главной страницы Отус")
@@ -101,6 +107,14 @@ public class MainPage extends BasePage {
         logger.info(String.format("Клик на подпункт '%s'", subMenuName));
 
         return this;
+    }
+
+    @Step("Клик на ссылку Контакты")
+    public void clickContactsLink() {
+        contactsLink.click();
+        Allure.addAttachment("MainPage", new ByteArrayInputStream(
+                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+        logger.info("Клик на ссылку Контакты");
     }
 
     void tryToCloseCookiePanel() {
