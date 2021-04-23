@@ -17,12 +17,26 @@ pipeline {
         }
         stage('Run maven clean test') {
             steps {
-                bat 'mvn clean test'
+                bat 'mvn clean test -Dfile.encoding=UTF8'
             }
         }
         stage('Backup and Reports') {
             steps {
-                echo 'Test backup stage'
+                archiveArtifacts artifacts: '**/target/', fingerprint: true
+            }
+            post {
+                always {
+                    script {
+                        allure([
+                            includeProperties: false,
+                            jdk: '',
+                            properties: [],
+                            reportBuildPolicy: 'ALWAYS',
+                            results: [[path: 'target/allure-results']]
+                        ])
+                        println('Allure report created')
+                    }
+                }
             }
         }
     }
