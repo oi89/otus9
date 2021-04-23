@@ -68,6 +68,20 @@ public class MainPage extends BasePage {
         return this;
     }
 
+    @Step("Клик на пункте главного меню Курсы")
+    public MainPage clickMainMenuCourses() {
+        coursesMenu = getWebElementByName(coursesMenuLocator, "Курсы");
+        coursesMenu.click();
+
+        Allure.addAttachment("MainPage", new ByteArrayInputStream(
+                ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)));
+
+        logger.info("Клик в меню 'Курсы'");
+
+        return this;
+    }
+
+
     @Step("Клик на пункте меню {subMenuName} первого уровня вложенности")
     public MainPage clickFirstLevelMenuByName(String subMenuName) {
         firstLevelMenu = getWebElementByName(firstLevelMenuLocator, subMenuName);

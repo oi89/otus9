@@ -28,7 +28,7 @@ public class CoursePageTest extends BaseTest {
 
         mainPage
                 .open()
-                .clickMainMenuByName("Курсы")
+                .clickMainMenuCourses()
                 .openSecondLevelMenuByName("Тестирование")
                 .clickSecondLevelMenuByName("Java QA Engineer");
 
