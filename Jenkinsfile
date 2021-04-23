@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        LC_ALL = 'en_US.UTF-8'
+        LANG    = 'en_US.UTF-8'
+        LANGUAGE = 'en_US.UTF-8'
+    }
+
     parameters {
             string(name: 'GIT_URL', defaultValue: 'https://github.com/oi89/otus9.git', description: 'The target git url')
             string(name: 'GIT_BRANCH', defaultValue: 'master', description: 'The target git branch')

@@ -20,7 +20,6 @@ public class BasePage {
 
     public WebElement getWebElementByName(String locator, String elementName) {
         String updatedLocator = String.format(locator, elementName);
-        logger.info("BASE PAGE = " + updatedLocator);
         WebElement element = driver.findElement(By.xpath(updatedLocator));
         return element;
     }
