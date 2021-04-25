@@ -57,6 +57,6 @@ pipeline {
 
  def sendNotifications() {
     def colorCode = '#FF0000'
-    def summary = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
     slackSend(color: colorCode, message: summary)
  }
