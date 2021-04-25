@@ -27,8 +27,8 @@ pipeline {
         }
         stage('Run maven clean test') {
             steps {
-                slackSend(message: "Notification from Jenkins")
                 bat 'mvn clean test -Dfile.encoding=UTF8'
+                sendNotifications()
             }
         }
         stage('Backup and Reports') {
@@ -51,4 +51,10 @@ pipeline {
             }
         }
     }
+ }
+
+ def sendNotifications() {
+    def colorCode = '#FF0000'
+    def summary = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    slackSend(color: colorCode, message: summary)
  }
