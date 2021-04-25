@@ -28,7 +28,6 @@ pipeline {
         stage('Run maven clean test') {
             steps {
                 bat 'mvn clean test -Dfile.encoding=UTF8'
-                sendNotifications()
             }
         }
         stage('Backup and Reports') {
@@ -46,6 +45,8 @@ pipeline {
                             results: [[path: 'target/allure-results']]
                         ])
                         println('Allure report created')
+
+                        sendNotifications()
                     }
                 }
             }
