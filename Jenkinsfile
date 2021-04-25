@@ -46,8 +46,6 @@ pipeline {
                             results: [[path: 'target/allure-results']]
                         ])
                         println('Allure report created')
-
-                        sendNotifications()
                     }
                 }
             }
