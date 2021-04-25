@@ -27,6 +27,7 @@ pipeline {
         }
         stage('Run maven clean test') {
             steps {
+                slackSend(message: "Notification from Jenkins")
                 bat 'mvn clean test -Dfile.encoding=UTF8'
             }
         }
