@@ -48,10 +48,6 @@ pipeline {
 
                         sendNotifications()
 
-//                         emailext (body: 'Test body',
-//                         to: "${EMAIL_TO}",
-//                         subject: 'Test subject')
-
 //                         emailext (
 //                             subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
 //                             body: """<p>Check console output at <a href="${env.BUILD_URL}">${env.JOB_NAME}</a></p>""",
@@ -70,15 +66,18 @@ pipeline {
  def sendNotifications() {
     def summary = junit testResults: '**/target/surefire-reports/*.xml'
 
+    def branch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD\n').trim().tokenize().last()
+
     def colorCode = '#FF0000'
-    def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \n Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
+    def slackMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \nTotal = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount} \nMore info at: ${env.BUILD_URL}"
+    def emailMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}, Branch ${branch}. \nPassed time: ${currentBuild.durationString}. \nTotal = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount} \nMore info at: ${env.BUILD_URL}"
 
     emailext (
-        subject: "Jenkins report",
-        body: message,
-        to: "olegivanov1989@gmail.com",
+        subject: "Jenkins Report",
+        body: emailMessage,
+        to: "${EMAIL_TO}",
         from: "jenkins@code-maven.com"
     )
 
-    slackSend(color: colorCode, message: message)
+    slackSend(color: colorCode, message: slackMessage)
  }
