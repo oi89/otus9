@@ -48,9 +48,9 @@ pipeline {
 
                         sendNotifications()
 
-                        emailext (body: 'Test body',
-                        to: "${EMAIL_TO}",
-                        subject: 'Test subject')
+//                         emailext (body: 'Test body',
+//                         to: "${EMAIL_TO}",
+//                         subject: 'Test subject')
 
 //                         emailext (
 //                             subject: "Job '${env.JOB_NAME} ${env.BUILD_NUMBER}'",
@@ -59,7 +59,7 @@ pipeline {
 //                             from: "jenkins@code-maven.com"
 //                         )
 
-                        step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
+//                         step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
                     }
                 }
             }
@@ -73,11 +73,12 @@ pipeline {
     def colorCode = '#FF0000'
     def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \n Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
 
-//     emailext (
-//         subject: "Jenkins report",
-//         body: message,
-//         to: "olegivanov1989@gmail.com",
-//         from: "jenkins@code-maven.com"
-//     )
+    emailext (
+        subject: "Jenkins report",
+        body: message,
+        to: "olegivanov1989@gmail.com",
+        from: "jenkins@code-maven.com"
+    )
+
     slackSend(color: colorCode, message: message)
  }
