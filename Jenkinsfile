@@ -51,6 +51,8 @@ pipeline {
                         emailext body: 'Test body',
                         to: "${EMAIL_TO}",
                         subject: 'Test subject'
+
+                        step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
                     }
                 }
             }
@@ -63,7 +65,7 @@ pipeline {
 
     def colorCode = '#FF0000'
     def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \n Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
-//     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
+
 //     emailext (
 //         subject: "Jenkins report",
 //         body: message,
