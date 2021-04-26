@@ -44,7 +44,6 @@ pipeline {
                             reportBuildPolicy: 'ALWAYS',
                             results: [[path: 'target/allure-results']]
                         ])
-                        println('Allure report created')
 
                         sendNotifications()
                     }
@@ -55,7 +54,17 @@ pipeline {
  }
 
  def sendNotifications() {
+    def summary = junit testResults: '**/target/surefire-reports/*.xml'
+
     def colorCode = '#FF0000'
-    def summary = "${currentBuild.currentResult}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-    slackSend(color: colorCode, message: summary)
+    def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER} \n
+    Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
+//     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
+    emailext (
+        subject: "Jenkins report",
+        body: message,
+        to: "olegivanov1989@gmail.com",
+        from: "jenkins@code-maven.com"
+    )
+    slackSend(color: colorCode, message: message)
  }
