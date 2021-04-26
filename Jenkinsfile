@@ -46,6 +46,11 @@ pipeline {
                         ])
 
                         sendNotifications()
+
+                        emailext subject: "Jenkins report",
+                                body: "Test body",
+                                to: "olegivanov1989@gmail.com"
+                        )
                     }
                 }
             }
