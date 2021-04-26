@@ -9,6 +9,7 @@ pipeline {
         LC_ALL = 'en_US.UTF-8'
         LANG    = 'en_US.UTF-8'
         LANGUAGE = 'en_US.UTF-8'
+        EMAIL_TO = 'olegivanov1989@gmail.com'
     }
 
     parameters {
@@ -47,9 +48,9 @@ pipeline {
 
                         sendNotifications()
 
-                        emailext subject: "Jenkins report",
-                                body: "Test body",
-                                to: "olegivanov1989@gmail.com"
+                        emailext body: 'Test body',
+                        to: "${EMAIL_TO}",
+                        subject: 'Test subject'
                     }
                 }
             }
@@ -61,13 +62,13 @@ pipeline {
     def summary = junit testResults: '**/target/surefire-reports/*.xml'
 
     def colorCode = '#FF0000'
-    def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER} Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
+    def message = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \n Total = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount}"
 //     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: "olegivanov1989@gmail.com", sendToIndividuals: true])
-    emailext (
-        subject: "Jenkins report",
-        body: message,
-        to: "olegivanov1989@gmail.com",
-        from: "jenkins@code-maven.com"
-    )
+//     emailext (
+//         subject: "Jenkins report",
+//         body: message,
+//         to: "olegivanov1989@gmail.com",
+//         from: "jenkins@code-maven.com"
+//     )
     slackSend(color: colorCode, message: message)
  }
