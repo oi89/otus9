@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Backup and Reports') {
             steps {
-                archiveArtifacts artifacts: '**/target/*.*', fingerprint: true
+                archiveArtifacts artifacts: 'target/**/*.*', fingerprint: true
             }
             post {
                 always {
