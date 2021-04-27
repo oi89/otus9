@@ -33,7 +33,7 @@ pipeline {
         }
         stage('Backup and Reports') {
             steps {
-                archiveArtifacts artifacts: '**/target/', fingerprint: true
+                archiveArtifacts artifacts: '**/target/*.*', fingerprint: true
             }
             post {
                 always {
@@ -67,10 +67,7 @@ pipeline {
     def summary = junit testResults: '**/target/surefire-reports/*.xml'
 
     def branch = bat(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD\n').trim().tokenize().last()
-
-    def colorCode = '#FF0000'
-    def slackMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \nTotal = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount} \nMore info at: ${env.BUILD_URL}"
-    def emailMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}, Branch ${branch}. \nPassed time: ${currentBuild.durationString}. \nTotal = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount} \nMore info at: ${env.BUILD_URL}"
+    def emailMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}, Branch ${branch}. \nPassed time: ${currentBuild.durationString}. \n\nTESTS:\nTotal = ${summary.totalCount},\nFailures = ${summary.failCount},\nSkipped = ${summary.skipCount},\nPassed = ${summary.passCount} \n\nMore info at: ${env.BUILD_URL}"
 
     emailext (
         subject: "Jenkins Report",
@@ -78,6 +75,9 @@ pipeline {
         to: "${EMAIL_TO}",
         from: "jenkins@code-maven.com"
     )
+
+    def colorCode = '#FF0000'
+    def slackMessage = "${currentBuild.currentResult}: Job '${env.JOB_NAME}', Build ${env.BUILD_NUMBER}. \nTotal = ${summary.totalCount}, Failures = ${summary.failCount}, Skipped = ${summary.skipCount}, Passed = ${summary.passCount} \nMore info at: ${env.BUILD_URL}"
 
     slackSend(color: colorCode, message: slackMessage)
  }
